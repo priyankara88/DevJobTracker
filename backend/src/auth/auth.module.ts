@@ -5,6 +5,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './schemas/create.user.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
+import {
+  ReffreshToken,
+  RffreshtokenSchema,
+} from './schemas/create.reffres.token';
 
 @Module({
   imports: [
@@ -13,6 +17,10 @@ import { ConfigModule } from '@nestjs/config';
       {
         name: User.name,
         schema: UserSchema,
+      },
+      {
+        name: ReffreshToken.name,
+        schema: RffreshtokenSchema,
       },
     ]),
   ],

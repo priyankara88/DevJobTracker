@@ -1,7 +1,12 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInEntity, UserEntity } from './entities/create.user.entity';
-import { CreateUserDto, SignInDto } from './dto/create.user.dto';
+import {
+  ChangePasswordDto,
+  CreateUserDto,
+  ReffreshTokenDto,
+  SignInDto,
+} from './dto/create.user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -15,5 +20,15 @@ export class AuthController {
   @Post('SignIn')
   async SignIn(@Body() signInDto: SignInDto): Promise<SignInEntity> {
     return this.authService.SignIn(signInDto);
+  }
+
+  @Post('Refresh-token')
+  async ReffreshToken(@Body() reffreshtokendto: ReffreshTokenDto) {
+    return this.authService.ReffreshToken(reffreshtokendto);
+  }
+
+  @Post('change-password')
+  async Changepassword(@Body() changepassworddto: ChangePasswordDto) {
+    return this.authService.ChangePassword(changepassworddto);
   }
 }

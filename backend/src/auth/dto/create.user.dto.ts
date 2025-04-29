@@ -15,3 +15,17 @@ export class SignInDto {
   email: string;
   password: string;
 }
+
+export class ReffreshTokenDto {
+  @IsString()
+  token: string;
+}
+
+export class ChangePasswordDto {
+  @IsString()
+  email: string;
+  @IsString()
+  oldpassword: string;
+  @IsString()
+  currentpassword: string;
+}
