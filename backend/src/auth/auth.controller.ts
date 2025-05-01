@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInEntity, UserEntity } from './entities/create.user.entity';
 import {
@@ -7,6 +7,7 @@ import {
   ReffreshTokenDto,
   SignInDto,
 } from './dto/create.user.dto';
+import { AuthGuard } from 'src/gurad/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -16,7 +17,7 @@ export class AuthController {
   async SignUp(@Body() creteuserdto: CreateUserDto): Promise<UserEntity> {
     return this.authService.Signup(creteuserdto);
   }
-
+  @UseGuards(AuthGuard)
   @Post('SignIn')
   async SignIn(@Body() signInDto: SignInDto): Promise<SignInEntity> {
     return this.authService.SignIn(signInDto);

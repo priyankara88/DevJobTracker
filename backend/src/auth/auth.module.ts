@@ -9,6 +9,8 @@ import {
   ReffreshToken,
   RffreshtokenSchema,
 } from './schemas/create.reffres.token';
+import { AuthGuard } from 'src/gurad/auth.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -25,6 +27,12 @@ import {
     ]),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+    AuthService,
+  ],
 })
 export class AuthModule {}
