@@ -29,3 +29,8 @@ export class ChangePasswordDto {
   @IsString()
   currentpassword: string;
 }
+
+export class FogotePasswordDto {
+  @IsString()
+  email: string;
+}

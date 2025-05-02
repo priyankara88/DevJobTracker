@@ -4,6 +4,7 @@ import { SignInEntity, UserEntity } from './entities/create.user.entity';
 import {
   ChangePasswordDto,
   CreateUserDto,
+  FogotePasswordDto,
   ReffreshTokenDto,
   SignInDto,
 } from './dto/create.user.dto';
@@ -31,5 +32,9 @@ export class AuthController {
   @Post('change-password')
   async Changepassword(@Body() changepassworddto: ChangePasswordDto) {
     return this.authService.ChangePassword(changepassworddto);
+  }
+  @Post('fogot-password')
+  async FogotePassword(@Body() fogotepassworddto: FogotePasswordDto) {
+    return this.authService.FogotePassword(fogotepassworddto);
   }
 }

@@ -10,6 +10,7 @@ import {
 import {
   ChangePasswordDto,
   CreateUserDto,
+  FogotePasswordDto,
   ReffreshTokenDto,
   SignInDto,
 } from './dto/create.user.dto';
@@ -17,6 +18,9 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { v4 as uuidv4 } from 'uuid';
 import { ReffreshToken } from './schemas/create.reffres.token';
+import { ResetToken } from './schemas/create.reset.token';
+import { nanoid } from 'nanoid';
+import { MailService } from 'src/services/mail.services';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +28,9 @@ export class AuthService {
     @InjectModel(User.name) private userModal: Model<User>,
     @InjectModel(ReffreshToken.name)
     private reffresTokenModal: Model<ReffreshToken>,
+    @InjectModel(ResetToken.name) private resetTokenModal: Model<ResetToken>,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   async Signup(userdetails: CreateUserDto): Promise<UserEntity> {
@@ -140,6 +146,33 @@ export class AuthService {
     const result = await this.userModal.updateOne(
       { email: changepassworddto.email },
       { $set: { password: hashPassword } },
+    );
+
+    return true;
+  }
+
+  async FogotePassword(fogotpassworddto: FogotePasswordDto) {
+    const IsEmail = await this.userModal.findOne({
+      email: fogotpassworddto.email,
+    });
+    if (!IsEmail) {
+      throw new BadRequestException(
+        'We Sent Your Password Reset Link to Email Address.',
+      );
+    }
+
+    const resetTime = new Date();
+    resetTime.setDate(resetTime.getHours() + 1);
+    const ResetToken = nanoid(64);
+    await this.resetTokenModal.create({
+      userid: IsEmail._id,
+      token: ResetToken,
+      expiredate: resetTime,
+    });
+
+    const IsSent = await this.mailService.sendPasswordResetEmail(
+      fogotpassworddto.email,
+      ResetToken,
     );
 
     return true;
