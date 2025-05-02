@@ -1,54 +1,284 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Description
 
-Currently, two official plugins are available:
+This is a backend authentication service built with NestJS and TypeScript, providing user authentication and authorization functionalities. It includes endpoints for user signup, sign-in, token refresh, password change, forgot password, and password reset. The service uses MongoDB as the database, JWT for authentication, and Nodemailer for email functionalities.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Features
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+User registration (SignUp) and login (SignIn)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
+
+
+JWT-based authentication with refresh tokens
+
+
+
+Password management (change, forgot, and reset password)
+
+
+
+MongoDB integration with Mongoose
+
+
+
+Email notifications using Nodemailer
+
+
+
+Input validation using class-validator and class-transformer
+
+
+
+API security with AuthGuard
+
+Prerequisites
+
+Before running the project, ensure you have the following installed:
+
+
+
+
+
+Node.js (v18 or higher)
+
+
+
+MongoDB (local or cloud instance)
+
+
+
+npm or yarn
+
+
+
+A configured email service (e.g., Gmail) for Nodemailer
+
+Installation
+
+
+
+
+
+Clone the repository:
+
+git clone <repository-url>
+cd backend
+
+
+
+Install dependencies:
+
+npm install
+
+
+
+Set up environment variables: Create a .env file in the root directory and add the following:
+
+MONGODB_URI=<your-mongodb-connection-string>
+JWT_SECRET=<your-jwt-secret>
+JWT_REFRESH_SECRET=<your-jwt-refresh-secret>
+EMAIL_USER=<your-email-address>
+EMAIL_PASS=<your-email-password-or-app-password>
+
+
+
+Start the MongoDB server (if running locally):
+
+mongod
+
+Scripts
+
+The following scripts are available in package.json:
+
+
+
+
+
+Build the project:
+
+npm run build
+
+
+
+Start the application (production):
+
+npm run start:prod
+
+
+
+Run in development mode (with watch):
+
+npm run start:dev
+
+
+
+Run tests:
+
+npm run test
+
+
+
+Run tests with coverage:
+
+npm run test:cov
+
+
+
+Run end-to-end tests:
+
+npm run test:e2e
+
+
+
+Format code (using Prettier):
+
+npm run format
+
+
+
+Lint code (using ESLint):
+
+npm run lint
+
+API Endpoints
+
+The following endpoints are available under the /auth route:
+
+
+
+
+
+
+
+Method
+
+
+
+Endpoint
+
+
+
+Description
+
+
+
+Authentication
+
+
+
+
+
+POST
+
+
+
+/auth/SignUp
+
+
+
+Register a new user
+
+
+
+None
+
+
+
+
+
+POST
+
+
+
+/auth/SignIn
+
+
+
+Log in a user
+
+
+
+AuthGuard
+
+
+
+
+
+POST
+
+
+
+/auth/Refresh-token
+
+
+
+Refresh JWT token
+
+
+
+None
+
+
+
+
+
+POST
+
+
+
+/auth/change-password
+
+
+
+Change user password
+
+
+
+None
+
+
+
+
+
+POST
+
+
+
+/auth/fogot-password
+
+
+
+Request password reset
+
+
+
+None
+
+
+
+
+
+PUT
+
+
+
+/auth/reset-password
+
+
+
+Reset user password
+
+
+
+None
+
+
+
+
 })
 ```
